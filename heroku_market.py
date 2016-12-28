@@ -9,6 +9,10 @@ import json
 import requests
 from flask_googlemaps import GoogleMaps, Map
 from sqlalchemy import create_engine
+import os
+import psycopg2
+import urlparse
+
 
 
 
@@ -17,6 +21,7 @@ app = Flask(__name__)
 bootstrap = Bootstrap(app)
 
 GoogleMaps(app)
+
 
 
 defaults = {'town': 'Englewood',
@@ -49,7 +54,19 @@ with open ('townlist.list', 'rb') as fp:
 town_types_dict  = {town:i for (i, town) in enumerate(town_names)}
 
 #House map Stuff
-engine = create_engine('postgresql://postgres:1Pedromachuca@localhost:5432/dvd')
+#engine = create_engine('postgresql://postgres:1Pedromachuca@localhost:5432/dvd')
+
+urlparse.uses_netloc.append("postgres")
+url = urlparse.urlparse(os.environ["DATABASE_URL"])
+
+engine = psycopg2.connect(
+    database=url.path[1:],
+    user=url.username,
+    password=url.password,
+    host=url.hostname,
+    port=url.port
+)
+
 
 to_erase = pd.read_sql_query('select * from map_info;', engine)
 to_erase = to_erase[to_erase.columns.difference(['index'])]
