@@ -20,7 +20,8 @@ app = Flask(__name__)
 
 bootstrap = Bootstrap(app)
 
-GoogleMaps(app)
+GoogleMaps(app, key="AIzaSyBa8A6gZHbchhdEFTfG6mEOE6InsBPS2P8")
+#GoogleMaps(app)
 
 
 
