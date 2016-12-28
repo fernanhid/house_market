@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<style>
+#map-canvas {
+ width: 70%;
+ height: 500px;
+ float: left;
+ }
+#newcrimeform {
+ float: right;
+ width: 25%;
+</style>
+	<title>House</title>
+
+
+<!-- This is absolutely necessary for it to run! -->  
+{{test_map.js}}
+</head>
+
+
+
+<body>
+ 
+{% extends "bootstrap/base.html" %}
+{% block title %}House Market App{% endblock %}
+
+
+{% block navbar %}
+<div class="navbar navbar-inverse" role="navigation"> <div class="container">
+<div class="navbar-header">
+<button type="button" class="navbar-toggle"
+data-toggle="collapse" data-target=".navbar-collapse"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+
+
+</button>
+<a class="navbar-brand" href="/">House Market APP</a> </div>
+<div class="navbar-collapse collapse"> 
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block content %}
+
+<!-- This is the map! -->
+<div id='map-canvas'>     
+        {{test_map.html}} 
+</div>  
+
+
+<div class="text-center" >
+<div class="page-header">
+<h1>Put Your House Dimensions:</h1> </div>
+</div>
+
+<div class="text-center" >
+<form>
+
+  town: <select name = 'town'>
+    {% for town_name in town_names %}
+    <option value = '{{town_name}}'
+    {{'selected="selected"' if bath==town_name}}> {{town_name}} </option>
+    {% endfor %}
+    </select>
+
+
+  bath: <select name = 'bath'>
+    {% for bath_num in bath_nums %}
+    <option value = "{{bath_num}}"
+    {{'selected="selected"' if bath==bath_num}}> {{bath_num}} </option>
+    {% endfor %}
+    </select>
+
+  beds: <select name = 'bed'>
+    {% for bed_num in bed_nums %}
+    <option value = '{{bed_num}}'
+    {{'selected="selected"' if bed==bed_num}}> {{bed_num}} </option>
+    {% endfor %}
+    </select> <br>
+
+    <input type = 'text' name = 'sqft' placeholder = 'SQFT' >
+
+    <input type = 'text' name = 'address' placeholder = 'address' >
+
+    <!-- test -->
+    
+
+    {% for amenity in amenities_list %}
+    <div class="checkbox">
+    <label>
+    <input type="checkbox" name={{amenity}} value= 1> {{amenity}}
+    </label>
+    </div>
+    {% endfor %}
+
+    <input type="submit" value="Submit">
+
+  </form>
+
+  predicted price : {{prediction}} 
+  </div>
+</body>
+</html>
+{% endblock %}
